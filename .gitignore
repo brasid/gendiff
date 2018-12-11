@@ -83,4 +83,4 @@ typings/
 src/.DS_Store
 
 # dist directory
-Dist
+dist
