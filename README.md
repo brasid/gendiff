@@ -17,4 +17,5 @@ npm install -g brasid-difference-generator
 ## Usage
 ```sh
 gendiff <firstConfig>.json <secondConfig>.json
-```sh
+```
+[![asciicast](https://asciinema.org/a/216366.svg)](https://asciinema.org/a/216366)
