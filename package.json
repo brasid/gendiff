@@ -1,7 +1,7 @@
 {
   "name": "brasid-difference-generator",
   "version": "0.0.1",
-  "description": "student's projects provided by hexlet.io",
+  "description": "Compares two configuration files and shows a difference.",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
   },
@@ -33,13 +33,14 @@
     "url": "https://github.com/brasid/project-lvl2-s381/issues"
   },
   "homepage": "https://github.com/brasid/project-lvl2-s381#readme",
-  "devdependencies": {
+  "dependencies": {
+    "commander": "^2.19.0"
+  },
+  "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.0",
     "@babel/node": "^7.2.0",
-    "@babel/preset-env": "^7.2.0"
-  },
-  "dependencies": {
+    "@babel/preset-env": "^7.2.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.1.0",
