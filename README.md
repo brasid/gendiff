@@ -13,3 +13,8 @@ Project mentor - @ [Kirill Mokevnin](https://github.com/mokevnin).
 npm install -g brasid-difference-generator
 ```
 [![asciicast](https://asciinema.org/a/216289.svg)](https://asciinema.org/a/216289)
+
+## Usage
+```sh
+gendiff <firstConfig>.json <secondConfig>.json
+```sh
