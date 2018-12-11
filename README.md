@@ -4,8 +4,8 @@
 [![build status](https://travis-ci.org/brasid/project-lvl2-s381.svg?branch=master)](https://travis-ci.org/brasid/project-lvl2-s381)
 
 ##
-A simple cli utility to find the difference betweeen two configuration files. This is a student's project provided by [hexlet](hexlet.io).
-Project mentor - @ [Kirill Mokevnin](https://github.com/mokevnin).
+A simple cli utility to find the difference betweeen two configuration files. This is a student's project provided by [hexlet](https://ru.hexlet.io).
+Project mentor - @[Kirill Mokevnin](https://github.com/mokevnin).
 ##
 
 ## Installation
