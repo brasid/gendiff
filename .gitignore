@@ -78,6 +78,9 @@ typings/
 #DynamoDB Local files
 .dynamodb/
 
-#MacOS rubbish 
+# MacOS rubbish 
 .DS_Store
 src/.DS_Store
+
+# dist directory
+Dist
