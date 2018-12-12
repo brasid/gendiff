@@ -13,5 +13,3 @@ program
   });
 
 program.parse(process.argv);
-
-// import '../cli';
