@@ -5,6 +5,7 @@
 
 ##
 A simple cli utility to find the difference betweeen two configuration files. This is a student's project provided by [hexlet](https://ru.hexlet.io).
+For now it worls with .json and .yml config files
 Project mentor - @[Kirill Mokevnin](https://github.com/mokevnin).
 ##
 
@@ -16,6 +17,6 @@ npm install -g brasid-difference-generator
 
 ## Usage
 ```sh
-gendiff <firstConfig>.json <secondConfig>.json
+gendiff <firstConfig> <secondConfig>
 ```
-[![asciicast](https://asciinema.org/a/216366.svg)](https://asciinema.org/a/216366)
+[![asciicast](https://asciinema.org/a/216614.svg)](https://asciinema.org/a/216614)
