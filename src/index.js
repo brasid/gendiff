@@ -2,6 +2,7 @@ import _ from 'lodash';
 import fs from 'fs';
 import yaml from 'js-yaml';
 import path from 'path';
+import ini from 'ini';
 
 const propertyActions = [
   {
@@ -32,9 +33,10 @@ const makeAst = (obj1, obj2) => _
 const parsers = {
   '.json': JSON.parse,
   '.yml': yaml.safeLoad,
+  '.ini': ini.decode,
 };
 
-const parse = (obj, ext) => parsers[ext](obj);
+const parse = (ext, obj) => parsers[ext](obj);
 
 const getDiff = (pathToBefore, pathToAfter) => {
   const before = fs.readFileSync(pathToBefore, 'utf-8');
