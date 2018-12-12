@@ -31,9 +31,9 @@ const makeAst = (obj1, obj2) => _
   .map(key => getPropertyAction(obj1, obj2, key).name(obj1, obj2, key));
 
 const parsers = {
-  '.json': JSON.parse,
-  '.yml': yaml.safeLoad,
-  '.ini': ini.decode,
+  json: JSON.parse,
+  yml: yaml.safeLoad,
+  ini: ini.decode,
 };
 
 const parse = (ext, obj) => parsers[ext](obj);
@@ -41,8 +41,8 @@ const parse = (ext, obj) => parsers[ext](obj);
 const getDiff = (pathToBefore, pathToAfter) => {
   const before = fs.readFileSync(pathToBefore, 'utf-8');
   const after = fs.readFileSync(pathToAfter, 'utf-8');
-  const ext1 = path.extname(pathToBefore);
-  const ext2 = path.extname(pathToAfter);
+  const ext1 = path.extname(pathToBefore).substring(1);
+  const ext2 = path.extname(pathToAfter).substring(1);
   const obj1 = parse(ext1, before);
   const obj2 = parse(ext2, after);
   const resultLine = makeAst(obj1, obj2).join('\n');
