@@ -29,18 +29,20 @@ const makeAst = (obj1, obj2) => _
   .union(_.keys(obj1), _.keys(obj2))
   .map(key => getPropertyAction(obj1, obj2, key).name(obj1, obj2, key));
 
-const parse = {
+const parsers = {
   '.json': JSON.parse,
   '.yml': yaml.safeLoad,
 };
+
+const parse = (obj, ext) => parsers[ext](obj);
 
 const getDiff = (pathToBefore, pathToAfter) => {
   const before = fs.readFileSync(pathToBefore, 'utf-8');
   const after = fs.readFileSync(pathToAfter, 'utf-8');
   const ext1 = path.extname(pathToBefore);
   const ext2 = path.extname(pathToAfter);
-  const obj1 = parse[ext1](before);
-  const obj2 = parse[ext2](after);
+  const obj1 = parse(ext1, before);
+  const obj2 = parse(ext2, after);
   const resultLine = makeAst(obj1, obj2).join('\n');
   return ['{', resultLine, '}\n'].join('\n');
 };
