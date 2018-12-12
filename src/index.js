@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import fs from 'fs';
-
+import yaml from 'js-yaml';
+import path from 'path';
 
 const propertyActions = [
   {
@@ -24,15 +25,23 @@ const propertyActions = [
 const getPropertyAction = (obj1, obj2, key) => _
   .find(propertyActions, ({ check }) => check(obj1, obj2, key));
 
+const makeAst = (obj1, obj2) => _
+  .union(_.keys(obj1), _.keys(obj2))
+  .map(key => getPropertyAction(obj1, obj2, key).name(obj1, obj2, key));
+
+const parse = {
+  '.json': JSON.parse,
+  '.yml': yaml.safeLoad,
+};
+
 const getDiff = (pathToBefore, pathToAfter) => {
   const before = fs.readFileSync(pathToBefore, 'utf-8');
   const after = fs.readFileSync(pathToAfter, 'utf-8');
-  const obj1 = JSON.parse(before); // first element will be base element
-  const obj2 = JSON.parse(after); // second element will be new element
-  const keys = _.union(_.keys(obj1), _.keys(obj2));
-  const resultLine = keys
-    .map(key => getPropertyAction(obj1, obj2, key).name(obj1, obj2, key))
-    .join('\n');
+  const ext1 = path.extname(pathToBefore);
+  const ext2 = path.extname(pathToAfter);
+  const obj1 = parse[ext1](before);
+  const obj2 = parse[ext2](after);
+  const resultLine = makeAst(obj1, obj2).join('\n');
   return ['{', resultLine, '}\n'].join('\n');
 };
 
