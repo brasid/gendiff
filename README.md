@@ -5,7 +5,7 @@
 
 ##
 A simple cli utility to find the difference betweeen two configuration files. This is a student's project provided by [hexlet](https://ru.hexlet.io).
-For now it worls with .json and .yml config files
+For now it worls with .json, .yml, .ini config files
 Project mentor - @[Kirill Mokevnin](https://github.com/mokevnin).
 ##
 
