@@ -20,8 +20,8 @@ test('PlainFiles', () => {
 
 test('NestedFiles', () => {
   const expected = fs.readFileSync('./__tests__/__fixtures__/expectNested', 'utf-8');
-  const before = `./__tests__/__fixtures__/beforeNested${ext1}`;
-  const after = `./__tests__/__fixtures__/afterNested${ext2}`;
-  const processed = genDiff(before, after);
+  const beforeNested = `./__tests__/__fixtures__/beforeNested${ext1}`;
+  const afterNested = `./__tests__/__fixtures__/afterNested${ext2}`;
+  const processed = genDiff(beforeNested, afterNested);
   expect(processed).toBe(expected);
 });
