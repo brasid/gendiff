@@ -9,20 +9,16 @@ const getExtName = (num1, num2) => extNames[getRandomNum(num1, num2)];
 
 test('PlainFiles', () => {
   const expected = fs.readFileSync('./__tests__/__fixtures__/expected', 'utf-8');
-  const ext1 = getExtName(0, 2);
-  const ext2 = getExtName(0, 2);
-  const before = `./__tests__/__fixtures__/before${ext1}`;
-  const after = `./__tests__/__fixtures__/after${ext2}`;
+  const before = `./__tests__/__fixtures__/before${getExtName(0, 2)}`;
+  const after = `./__tests__/__fixtures__/after${getExtName(0, 2)}`;
   const processed = genDiff(before, after);
   expect(processed).toBe(expected);
 });
 
 test('NestedFiles', () => {
   const expected = fs.readFileSync('./__tests__/__fixtures__/expectNested', 'utf-8');
-  const extNested1 = getExtName(0, 2);
-  const extNested2 = getExtName(0, 2);
-  const before = `./__tests__/__fixtures__/beforeNested${extNested1}`;
-  const after = `./__tests__/__fixtures__/afterNested${extNested2}`;
+  const before = `./__tests__/__fixtures__/beforeNested${getExtName(0, 2)}`;
+  const after = `./__tests__/__fixtures__/afterNested${getExtName(0, 2)}`;
   const processed = genDiff(before, after);
   expect(processed).toBe(expected);
 });
