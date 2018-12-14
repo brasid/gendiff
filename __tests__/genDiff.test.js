@@ -1,26 +1,28 @@
 import fs from 'fs';
 import genDiff from '../src';
 
-describe('GenDiff', () => {
+const getRandomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+const extNames = ['.json', '.yml', '.ini'];
+
+const getExtName = (num1, num2) => extNames[getRandomNum(num1, num2)];
+
+test('PlainFiles', () => {
   const expected = fs.readFileSync('./__tests__/__fixtures__/expected', 'utf-8');
-  it('check json', () => {
-    const processed = genDiff('./__tests__/__fixtures__/before.json', './__tests__/__fixtures__/after.json');
-    expect(processed).toBe(expected);
-  });
-  it('check yml', () => {
-    const processed = genDiff('./__tests__/__fixtures__/before.yml', './__tests__/__fixtures__/after.yml');
-    expect(processed).toBe(expected);
-  });
-  it('check ini', () => {
-    const processed = genDiff('./__tests__/__fixtures__/before.ini', './__tests__/__fixtures__/after.ini');
-    expect(processed).toBe(expected);
-  });
-  it('check json and yml', () => {
-    const processed = genDiff('./__tests__/__fixtures__/before.json', './__tests__/__fixtures__/after.yml');
-    expect(processed).toBe(expected);
-  });
-  it('check yml and ini', () => {
-    const processed = genDiff('./__tests__/__fixtures__/before.ini', './__tests__/__fixtures__/after.yml');
-    expect(processed).toBe(expected);
-  });
+  const ext1 = getExtName(0, 2);
+  const ext2 = getExtName(0, 2);
+  const before = `./__tests__/__fixtures__/before${ext1}`;
+  const after = `./__tests__/__fixtures__/after${ext2}`;
+  const processed = genDiff(before, after);
+  expect(processed).toBe(expected);
+});
+
+test('NestedFiles', () => {
+  const expected = fs.readFileSync('./__tests__/__fixtures__/expectNested', 'utf-8');
+  const extNested1 = getExtName(0, 2);
+  const extNested2 = getExtName(0, 2);
+  const before = `./__tests__/__fixtures__/beforeNested${extNested1}`;
+  const after = `./__tests__/__fixtures__/afterNested${extNested2}`;
+  const processed = genDiff(before, after);
+  expect(processed).toBe(expected);
 });
