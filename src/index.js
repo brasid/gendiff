@@ -1,42 +1,39 @@
 import _ from 'lodash';
 import fs from 'fs';
-import yaml from 'js-yaml';
 import path from 'path';
-import ini from 'ini';
+import parse from './parsers';
+import render from './renderer';
 
 const propertyActions = [
   {
+    check: (obj1, obj2, key) => (_.isObject(obj1[key]) && _.isObject(obj2[key])),
+    process: (obj1, obj2, key, fn) => ({ type: 'nested', key, children: fn(obj1[key], obj2[key]) }),
+  },
+  {
     check: (obj1, obj2, key) => !_.has(obj1, key) && _.has(obj2, key),
-    name: (obj1, obj2, key) => `  + ${key}: ${obj2[key]}`,
+    process: (obj1, obj2, key) => ({ type: 'added', key, value: obj2[key] }),
   },
   {
     check: (obj1, obj2, key) => _.has(obj1, key) && !_.has(obj2, key),
-    name: (obj1, obj2, key) => `  - ${key}: ${obj1[key]}`,
+    process: (obj1, obj2, key) => ({ type: 'deleted', key, value: obj1[key] }),
   },
   {
     check: (obj1, obj2, key) => obj1[key] === obj2[key],
-    name: (obj1, obj2, key) => `    ${key}: ${obj2[key]}`,
+    process: (obj1, obj2, key) => ({ type: 'unchanged', key, value: obj1[key] }),
   },
   {
     check: (obj1, obj2, key) => obj1[key] !== obj2[key],
-    name: (obj1, obj2, key) => `  - ${key}: ${obj1[key]}\n  + ${key}: ${obj2[key]}`,
+    process: (obj1, obj2, key) => ({
+      type: 'changed', key, valueOld: obj1[key], value: obj2[key],
+    }),
   },
 ];
-
 const getPropertyAction = (obj1, obj2, key) => _
   .find(propertyActions, ({ check }) => check(obj1, obj2, key));
 
-const makeAst = (obj1, obj2) => _
+const genAst = (obj1, obj2) => _
   .union(_.keys(obj1), _.keys(obj2))
-  .map(key => getPropertyAction(obj1, obj2, key).name(obj1, obj2, key));
-
-const parsers = {
-  json: JSON.parse,
-  yml: yaml.safeLoad,
-  ini: ini.decode,
-};
-
-const parse = (ext, obj) => parsers[ext](obj);
+  .map(key => getPropertyAction(obj1, obj2, key).process(obj1, obj2, key, genAst));
 
 const getDiff = (pathToBefore, pathToAfter) => {
   const before = fs.readFileSync(pathToBefore, 'utf-8');
@@ -45,8 +42,14 @@ const getDiff = (pathToBefore, pathToAfter) => {
   const ext2 = path.extname(pathToAfter).substring(1);
   const obj1 = parse(ext1, before);
   const obj2 = parse(ext2, after);
-  const resultLine = makeAst(obj1, obj2).join('\n');
-  return ['{', resultLine, '}\n'].join('\n');
+  const ast = _.flatten(genAst(obj1, obj2));
+  const result = render(ast);
+  console.log(before);
+  console.log(ext1);
+  console.log(after);
+  console.log(ext2);
+  console.log(result);
+  return result;
 };
 
 export default getDiff;
