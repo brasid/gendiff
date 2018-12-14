@@ -16,7 +16,12 @@ npm install -g brasid-difference-generator
 [![asciicast](https://asciinema.org/a/216289.svg)](https://asciinema.org/a/216289)
 
 ## Usage
+### Comparing plain files
 ```sh
 gendiff <firstConfig> <secondConfig>
 ```
 [![asciicast](https://asciinema.org/a/216614.svg)](https://asciinema.org/a/216614)
+
+### Comparing nested files
+
+[![asciicast](https://asciinema.org/a/216987.svg)](https://asciinema.org/a/216987)
