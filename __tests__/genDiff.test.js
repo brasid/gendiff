@@ -42,3 +42,13 @@ describe('NestedFiles -f plain', () => {
   const format = 'plain';
   getCartesianTests(beforeArr, afterArr, expected, format);
 });
+
+describe('Check -f json', () => {
+  it('set1', () => {
+    const expected = fs.readFileSync('./__tests__/__fixtures__/expectJSON.json', 'utf-8');
+    const before = './__tests__/__fixtures__/beforeNested.json';
+    const after = './__tests__/__fixtures__/afterNested.yml';
+    const actual = genDiff(before, after, 'json');
+    expect(actual).toBe(expected);
+  });
+});
