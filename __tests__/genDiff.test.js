@@ -21,7 +21,7 @@ describe('PlainFiles', () => {
   const expected = fs.readFileSync('./__tests__/__fixtures__/expected', 'utf-8');
   const beforeArr = plainFiles[0];
   const afterArr = plainFiles[1];
-  return getCartesianTests(beforeArr, afterArr, expected);
+  getCartesianTests(beforeArr, afterArr, expected);
 });
 
 describe('NestedFiles', () => {
@@ -29,5 +29,5 @@ describe('NestedFiles', () => {
   const expected = fs.readFileSync('./__tests__/__fixtures__/expectNested', 'utf-8');
   const beforeArr = nestedFiles[0];
   const afterArr = nestedFiles[1];
-  return getCartesianTests(beforeArr, afterArr, expected);
+  getCartesianTests(beforeArr, afterArr, expected);
 });
