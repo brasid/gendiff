@@ -14,7 +14,7 @@ Project mentor - [@Kirill Mokevnin](https://github.com/mokevnin).
 ```sh
 npm install -g brasid-difference-generator
 ```
-[![asciicast](https://asciinema.org/a/216289.svg)](https://asciinema.org/a/216289)
+![asciicastgif](https://drive.google.com/file/d/1xKBXnNXBw_2_aakVF7jTxQs7V_iiA9PO/view?usp=sharing)
 
 ## Usage
 The utility can present diff in different formats. For now there are three formats: 'standart', 'plain' and 'json'
