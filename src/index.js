@@ -24,7 +24,7 @@ const propertyActions = [
   {
     check: (obj1, obj2, key) => obj1[key] !== obj2[key],
     process: (obj1, obj2, key) => ({
-      type: 'changed', key, valueOld: obj1[key], value: obj2[key],
+      type: 'changed', key, oldValue: obj1[key], newValue: obj2[key],
     }),
   },
 ];

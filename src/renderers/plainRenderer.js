@@ -1,27 +1,29 @@
 import _ from 'lodash';
 
-const getString = value => (typeof value === 'string' ? `'${value}'` : `${value}`);
-
-const getContent = value => (_.isObject(value) ? '[complex value]' : getString(value));
+const stringify = (value) => {
+  if (typeof value === 'string') {
+    return `'${value}'`;
+  }
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+  return `${value}`;
+};
 
 const typeActions = {
-  changed: (name, content, acc) => [...acc, `Property '${name}' was updated. From ${content.old} to ${content.new}`],
-  deleted: (name, content, acc) => [...acc, `Property '${name}' was removed`],
-  added: (name, content, acc) => [...acc, `Property '${name}' was added with value: ${content.new}`],
-  nested: (name, content, acc, children, fn) => [...acc, fn(children, name)],
-  unchanged: (name, content, acc) => acc,
+  changed: (obj, name) => `Property '${name}' was updated. From ${stringify(obj.oldValue)} to ${stringify(obj.newValue)}`,
+  deleted: (obj, name) => `Property '${name}' was removed`,
+  added: (obj, name) => `Property '${name}' was added with value: ${stringify(obj.value)}`,
+  nested: (obj, name, fn) => fn(obj.children, `${name}.`),
+  unchanged: () => [],
 };
 
 const render = (ast, ancestry = '') => {
   const processed = ast
-    .reduce((acc, obj) => {
-      const {
-        type, value, valueOld, children,
-      } = obj;
-      const content = { old: getContent(valueOld), new: getContent(value) };
-      const name = ancestry.length > 0 ? `${ancestry}.${obj.key}` : `${obj.key}`;
-      return typeActions[type](name, content, acc, children, render);
-    }, []);
-  return processed.join('\n');
+    .map((obj) => {
+      const name = `${ancestry}${obj.key}`;
+      return typeActions[obj.type](obj, name, render);
+    });
+  return _.flatten(processed).join('\n');
 };
 export default ast => `${render(ast)}\n`;

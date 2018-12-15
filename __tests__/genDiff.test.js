@@ -1,14 +1,16 @@
 import fs from 'fs';
 import genDiff from '../src';
 
-const extNames = ['.json', '.yml', '.ini'];
-const plainNames = ['./__tests__/__fixtures__/before', './__tests__/__fixtures__/after'];
-const nestedNames = ['./__tests__/__fixtures__/beforeNested', './__tests__/__fixtures__/afterNested'];
+const exts = ['.json', '.yml', '.ini'];
+const names = ['./__tests__/__fixtures__/beforeNested', './__tests__/__fixtures__/afterNested'];
 
-const getCartesianFiles = (exts, names) => exts.map(ext => names.map(name => [ext, name].join('')));
+const filePaths = names.map(name => exts.map(ext => [name, ext].join('')));
 
-const getCartesianTests = (beforeArr, afterArr, expected, format) => beforeArr.map(
-  (before, indexBefore) => afterArr.map(
+const beforeArr = filePaths[0];
+const afterArr = filePaths[1];
+
+const getCartesianTests = (expected, format) => beforeArr.forEach(
+  (before, indexBefore) => afterArr.forEach(
     (after, indexAfter) => it(`set${indexBefore}.${indexAfter}`, () => {
       const actual = genDiff(before, after, format);
       expect(actual).toBe(expected);
@@ -16,34 +18,19 @@ const getCartesianTests = (beforeArr, afterArr, expected, format) => beforeArr.m
   ),
 );
 
-describe('SimpleFiles -f standart', () => {
-  const plainFiles = getCartesianFiles(plainNames, extNames);
-  const expected = fs.readFileSync('./__tests__/__fixtures__/expected', 'utf-8');
-  const beforeArr = plainFiles[0];
-  const afterArr = plainFiles[1];
-  const format = 'standart';
-  getCartesianTests(beforeArr, afterArr, expected, format);
-});
-
-describe('NestedFiles -f standart', () => {
-  const nestedFiles = getCartesianFiles(nestedNames, extNames);
+describe('Check standart renderer', () => {
   const expected = fs.readFileSync('./__tests__/__fixtures__/expectNested', 'utf-8');
-  const beforeArr = nestedFiles[0];
-  const afterArr = nestedFiles[1];
   const format = 'standart';
-  getCartesianTests(beforeArr, afterArr, expected, format);
+  getCartesianTests(expected, format);
 });
 
-describe('NestedFiles -f plain', () => {
-  const nestedFiles = getCartesianFiles(nestedNames, extNames);
+describe('Check plain renderer', () => {
   const expected = fs.readFileSync('./__tests__/__fixtures__/expectPlain', 'utf-8');
-  const beforeArr = nestedFiles[0];
-  const afterArr = nestedFiles[1];
   const format = 'plain';
-  getCartesianTests(beforeArr, afterArr, expected, format);
+  getCartesianTests(expected, format);
 });
 
-describe('Check -f json', () => {
+describe('Check json renderer', () => {
   it('set1', () => {
     const expected = fs.readFileSync('./__tests__/__fixtures__/expectJSON.json', 'utf-8');
     const before = './__tests__/__fixtures__/beforeNested.json';
