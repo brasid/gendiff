@@ -2,7 +2,7 @@ import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
 import parse from './parsers';
-import render from './renderer';
+import render from './renderers/standartRenderer';
 
 const propertyActions = [
   {
