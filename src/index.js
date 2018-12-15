@@ -2,7 +2,7 @@ import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
 import parse from './parsers';
-import render from './renderers/standartRenderer';
+import render from './renderers';
 
 const propertyActions = [
   {
@@ -35,7 +35,7 @@ const genAst = (obj1, obj2) => _
   .union(_.keys(obj1), _.keys(obj2))
   .map(key => getPropertyAction(obj1, obj2, key).process(obj1, obj2, key, genAst));
 
-const getDiff = (pathToBefore, pathToAfter) => {
+const getDiff = (pathToBefore, pathToAfter, outFormat) => {
   const before = fs.readFileSync(pathToBefore, 'utf-8');
   const after = fs.readFileSync(pathToAfter, 'utf-8');
   const ext1 = path.extname(pathToBefore).substring(1);
@@ -43,7 +43,7 @@ const getDiff = (pathToBefore, pathToAfter) => {
   const obj1 = parse(ext1, before);
   const obj2 = parse(ext2, after);
   const ast = _.flatten(genAst(obj1, obj2));
-  return render(ast);
+  return render(ast, outFormat);
 };
 
 export default getDiff;

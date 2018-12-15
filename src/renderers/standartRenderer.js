@@ -33,6 +33,5 @@ const render = (ast, indent = 2) => {
   const result = _.flatten(processed).join('\n');
   return `{\n${result}\n${step(indent - 2)}}`;
 };
-const stringify = ast => `${render(ast)}\n`;
 
-export default stringify;
+export default ast => `${render(ast)}\n`;
