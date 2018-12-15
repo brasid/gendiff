@@ -42,7 +42,7 @@ const getDiff = (pathToBefore, pathToAfter, outFormat) => {
   const ext2 = path.extname(pathToAfter).substring(1);
   const obj1 = parse(ext1, before);
   const obj2 = parse(ext2, after);
-  const ast = _.flatten(genAst(obj1, obj2));
+  const ast = genAst(obj1, obj2);
   return render(ast, outFormat);
 };
 
