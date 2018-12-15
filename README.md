@@ -39,15 +39,13 @@ gendiff <firstConfig> <secondConfig>
 
 ### Comparing files using plain output
 ```sh
-gendiff --format plain <firstConfig> <secondConfig>
-gendiff -f plain <firstConfig> <secondConfig>
+gendiff -f [--format] plain <firstConfig> <secondConfig>
 ```
 
 [![asciicast](https://asciinema.org/a/217073.svg)](https://asciinema.org/a/217073)
 
 ### Comparing files using json output
 ```sh
-gendiff --format json <firstConfig> <secondConfig>
-gendiff -f json <firstConfig> <secondConfig>
+gendiff -f [--format] json <firstConfig> <secondConfig>
 ```
 [![asciicast](https://asciinema.org/a/217085.svg)](https://asciinema.org/a/217085)
