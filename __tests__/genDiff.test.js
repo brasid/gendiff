@@ -1,27 +1,33 @@
 import fs from 'fs';
 import genDiff from '../src';
 
-const getRandomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
 const extNames = ['.json', '.yml', '.ini'];
+const plainNames = ['./__tests__/__fixtures__/before', './__tests__/__fixtures__/after'];
+const nestedNames = ['./__tests__/__fixtures__/beforeNested', './__tests__/__fixtures__/afterNested'];
 
-const getExtName = (num1, num2) => extNames[getRandomNum(num1, num2)];
+const getCartesianFiles = (exts, names) => exts.map(ext => names.map(name => [ext, name].join('')));
 
-const ext1 = getExtName(0, 2);
-const ext2 = getExtName(1, 3);
+const getCartesianTests = (beforeArr, afterArr, expected) => beforeArr.map(
+  (before, indexBefore) => afterArr.map(
+    (after, indexAfter) => it(`set${indexBefore}.${indexAfter}`, () => {
+      const actual = genDiff(before, after);
+      expect(actual).toBe(expected);
+    }),
+  ),
+);
 
-test('PlainFiles', () => {
+describe('PlainFiles', () => {
+  const plainFiles = getCartesianFiles(plainNames, extNames);
   const expected = fs.readFileSync('./__tests__/__fixtures__/expected', 'utf-8');
-  const before = `./__tests__/__fixtures__/before${ext1}`;
-  const after = `./__tests__/__fixtures__/after${ext2}`;
-  const processed = genDiff(before, after);
-  expect(processed).toBe(expected);
+  const beforeArr = plainFiles[0];
+  const afterArr = plainFiles[1];
+  return getCartesianTests(beforeArr, afterArr, expected);
 });
 
-test('NestedFiles', () => {
+describe('NestedFiles', () => {
+  const nestedFiles = getCartesianFiles(nestedNames, extNames);
   const expected = fs.readFileSync('./__tests__/__fixtures__/expectNested', 'utf-8');
-  const beforeNested = `./__tests__/__fixtures__/beforeNested${ext1}`;
-  const afterNested = `./__tests__/__fixtures__/afterNested${ext2}`;
-  const processed = genDiff(beforeNested, afterNested);
-  expect(processed).toBe(expected);
+  const beforeArr = nestedFiles[0];
+  const afterArr = nestedFiles[1];
+  return getCartesianTests(beforeArr, afterArr, expected);
 });
