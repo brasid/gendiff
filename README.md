@@ -17,17 +17,24 @@ npm install -g brasid-difference-generator
 [![asciicast](https://asciinema.org/a/216289.svg)](https://asciinema.org/a/216289)
 
 ## Usage
-### Comparing files
+The utility can present diff in different formats. For now there are three formats: 'standart', 'plain' and 'json'
+### Comparing files using standart output
 ```sh
 gendiff <firstConfig> <secondConfig>
 ```
 [![asciicast](https://asciinema.org/a/216987.svg)](https://asciinema.org/a/216987)
 
-### Using output format
-The utility can present diff in different formats. For now there are two format types: 'standart' and 'plain'
+### Comparing files using plain output
 ```sh
-gendiff --format <firstConfig> <secondConfig>
-gendiff -f <firstConfig> <secondConfig>
+gendiff --format plain <firstConfig> <secondConfig>
+gendiff -f plain <firstConfig> <secondConfig>
 ```
 
 [![asciicast](https://asciinema.org/a/217073.svg)](https://asciinema.org/a/217073)
+
+### Comparing files using json output
+```sh
+gendiff --format json <firstConfig> <secondConfig>
+gendiff -f json <firstConfig> <secondConfig>
+```
+[![asciicast](https://asciinema.org/a/217085.svg)](https://asciinema.org/a/217085)
