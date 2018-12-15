@@ -18,6 +18,19 @@ npm install -g brasid-difference-generator
 
 ## Usage
 The utility can present diff in different formats. For now there are three formats: 'standart', 'plain' and 'json'
+```sh
+gendiff -h
+
+  Usage: gendiff [options] <firstConfig> <secondConfig>
+
+  Compares two configuration files and shows a difference.
+
+  Options:
+
+    -h, --help           output usage information
+    -V, --version        output the version number
+    -f, --format [type]  Output format
+```
 ### Comparing files using standart output
 ```sh
 gendiff <firstConfig> <secondConfig>
