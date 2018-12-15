@@ -5,9 +5,9 @@
 
 ##
 A simple cli utility to find the difference betweeen two configuration files. This is a student's project provided by [hexlet](https://ru.hexlet.io).
-For now it worls with .json, .yml, .ini config files.
+For now it works with .json, .yml and .ini config files.
 
-Project mentor - @[Kirill Mokevnin](https://github.com/mokevnin).
+Project mentor - [@Kirill Mokevnin](https://github.com/mokevnin).
 ##
 
 ## Installation
@@ -26,3 +26,11 @@ gendiff <firstConfig> <secondConfig>
 ### Comparing nested files
 
 [![asciicast](https://asciinema.org/a/216987.svg)](https://asciinema.org/a/216987)
+
+### Using output format
+```sh
+gendiff --format <firstConfig> <secondConfig>
+gendiff -f <firstConfig> <secondConfig>
+```
+
+[![asciicast](https://asciinema.org/a/217073.svg)](https://asciinema.org/a/217073)
