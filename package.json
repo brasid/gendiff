@@ -33,7 +33,20 @@
     "url": "https://github.com/brasid/project-lvl2-s381/issues"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coveragePathIgnorePatterns": [
+    "<rootDir>/src/bin"
+    ],
+    "coverageReporters": [
+      "lcov"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/__fixtures__"
+    ]
   },
   "homepage": "https://github.com/brasid/project-lvl2-s381#readme",
   "dependencies": {
