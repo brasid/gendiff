@@ -45,5 +45,6 @@ const getDiff = (pathToBefore, pathToAfter, outFormat) => {
   const ast = genAst(obj1, obj2);
   return render(ast, outFormat);
 };
-console.log(heu);
+
 export default getDiff;
+
